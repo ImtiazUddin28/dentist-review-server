@@ -41,7 +41,6 @@ async function run() {
         });
 
 
-        // orders api
         app.get('/orders', async (req, res) => {
             let query = {};
 
