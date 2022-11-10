@@ -66,16 +66,31 @@ async function run() {
             res.send(result);
         });
 
-        app.patch('/reviews/:id', async (req, res) => {
+        // app.patch('/reviews/:id', async (req, res) => {
+        //     const id = req.params.id;
+        //     const status = req.body.status
+        //     const query = { _id: ObjectId(id) }
+        //     const updatedDoc = {
+        //         $set:{
+        //             status: status
+        //         }
+        //     }
+        //     const result = await reviewsCollection.updateOne(query, updatedDoc);
+        //     res.send(result);
+        // })
+        app.put('/reviews/:id', async (req, res) => {
             const id = req.params.id;
-            const status = req.body.status
-            const query = { _id: ObjectId(id) }
-            const updatedDoc = {
-                $set:{
-                    status: status
+            const filter = { _id: ObjectId(id) };
+            const reviewservice = req.body;
+            const option = {upsert: true};
+            const updatedReview = {
+                $set: {
+                    name: reviewservice.customer,
+                    text: reviewservice.text,
+                    img: reviewservice.img
                 }
             }
-            const result = await reviewsCollection.updateOne(query, updatedDoc);
+            const result = await reviewsCollection.updateOne(filter, updatedReview, option);
             res.send(result);
         })
 
