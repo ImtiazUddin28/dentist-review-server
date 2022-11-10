@@ -55,8 +55,7 @@ async function run() {
                     email: req.query.email
                 }
             }
-
-            const cursor = reviewsCollection.find(query);
+            const cursor = reviewsCollection.find().sort({lastUpdated: -1})
             const reviews = await cursor.toArray();
             res.send(reviews);
         });
